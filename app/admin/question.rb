@@ -1,17 +1,29 @@
 ActiveAdmin.register Question do
+  show do
+    attributes_table do
+      row :text
 
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
+      table_for question.answers do
+        column(:answers) do |a|
+          question.right_answer.id == a.id ? status_tag(a.text, :ok) : a.text
+        end
+      end
+    end
+  end
 
+  form do |f|
+    f.inputs do
+      f.input :text
+      f.has_many :answers do |a|
+        a.input :text
+      end
+    end
+    f.actions
+  end
 
+  controller do
+    def permitted_params
+      params.permit!
+    end
+  end
 end
