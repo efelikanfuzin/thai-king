@@ -5,6 +5,10 @@ gem 'sqlite3'
 gem 'puma', '~> 3.0'
 gem 'jbuilder', '~> 2.5'
 
+gem 'devise'
+gem 'activeadmin', github: 'activeadmin'
+gem 'inherited_resources', github: 'activeadmin/inherited_resources'
+
 group :development, :test do
   gem 'byebug', platform: :mri
 end
