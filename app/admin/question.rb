@@ -1,7 +1,7 @@
 ActiveAdmin.register Question do
   show do
     attributes_table do
-      row :text
+      row(:question) { |question| question.text }
 
       table_for question.answers do
         column(:answers) do |a|
@@ -24,6 +24,10 @@ ActiveAdmin.register Question do
   controller do
     def permitted_params
       params.permit!
+    end
+
+    def scoped_collection
+      super.includes :answers
     end
   end
 end

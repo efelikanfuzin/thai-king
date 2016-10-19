@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   # GET /questions
   def index
-    @questions = Question.all
+    @questions = Question.includes(:answers).all
   end
 
   # POST /questions
