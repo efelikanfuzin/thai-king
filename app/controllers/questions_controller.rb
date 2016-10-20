@@ -8,9 +8,7 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
 
-    if @question.save
-      render json: @question, status: :created, location: @question
-    else
+    unless @question.save
       render json: @question.errors, status: :unprocessable_entity
     end
   end
@@ -18,6 +16,7 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:text, :answer_id)
+    params.require(:question).permit(:text, answers_attributes:
+                                              [:text, :is_right])
   end
 end

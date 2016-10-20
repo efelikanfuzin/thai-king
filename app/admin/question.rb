@@ -5,7 +5,7 @@ ActiveAdmin.register Question do
 
       table_for question.answers do
         column(:answers) do |a|
-          question.right_answer.id == a.id ? status_tag(a.text, :ok) : a.text
+          a.is_right ? status_tag(a.text, :ok) : a.text
         end
       end
     end
@@ -16,6 +16,7 @@ ActiveAdmin.register Question do
       f.input :text
       f.has_many :answers do |a|
         a.input :text
+        a.input :is_right
       end
     end
     f.actions
