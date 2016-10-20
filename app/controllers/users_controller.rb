@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: :update
+  before_action :require_auth, only: :update
+
   # POST /users
   def create
     @user = User.find_or_initialize_by(user_params)
+    @user.create_session
 
     if @user.save
       render :show, status: :created
@@ -10,9 +14,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    unless @current_user.try(:id) == params[:id].to_i
+      render head(:unauthorized) && return
+    end
+
+    @user.update_attributes(user_params.permit(:balance, passed_questions: []))
+    render :show
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:email, :device_id)
+    params.require(:user).permit(:email, :device_id, :balance,
+                                 passed_questions: [])
+  end
+
+  def set_user
+    @user = User.find_by(id: params[:id])
+    render head :not_found unless @user
   end
 end

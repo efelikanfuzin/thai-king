@@ -1,7 +1,10 @@
 class QuestionsController < ApplicationController
+  before_action :require_auth, only: :index
+
   # GET /questions
   def index
-    @questions = Question.includes(:answers).approved.all
+    @questions = Question.includes(:answers).approved
+                         .where.not(id: @current_user.passed_questions)
   end
 
   # POST /questions
