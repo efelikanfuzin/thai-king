@@ -2,6 +2,7 @@ ActiveAdmin.register Question do
   show do
     attributes_table do
       row(:question) { |question| question.text }
+      row :status
 
       table_for question.answers do
         column(:answers) do |a|
@@ -14,6 +15,7 @@ ActiveAdmin.register Question do
   form do |f|
     f.inputs do
       f.input :text
+      f.input :status
       f.has_many :answers do |a|
         a.input :text
         a.input :is_right
