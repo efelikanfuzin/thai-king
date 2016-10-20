@@ -3,6 +3,9 @@ class QuestionsController < ApplicationController
 
   # GET /questions
   def index
+    unless @current_user
+      render head(:unauthorized) && return
+    end
     @questions = Question.includes(:answers).approved
                          .where.not(id: @current_user.passed_questions)
   end
