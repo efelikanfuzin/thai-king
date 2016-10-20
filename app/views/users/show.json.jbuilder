@@ -1,0 +1,1 @@
+json.user @user, :id, :email, :device_id, :balance
