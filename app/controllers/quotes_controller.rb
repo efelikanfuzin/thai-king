@@ -1,7 +1,8 @@
 class QuotesController < ApplicationController
   # GET /quotes.json
   def index
-    @quotes = Quote.all
+    @quote_update = Update.where(model: :quote).first
+    @quotes = @quote_update.last?(params[:last_update]) ? [] : Quote.all
   end
 
   # POST /quotes.json

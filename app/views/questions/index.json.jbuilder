@@ -1,4 +1,4 @@
-json.last_update @last_update
+json.(@question_update, :last_update)
 
 json.questions @questions do |question|
   json.(question, :id, :text)

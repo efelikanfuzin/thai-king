@@ -3,11 +3,15 @@ class QuestionsController < ApplicationController
 
   # GET /questions
   def index
-    unless @current_user
-      render head(:unauthorized) && return
-    end
-    @questions = Question.includes(:answers).approved
-                         .where.not(id: @current_user.passed_questions)
+    render head(:unauthorized) && return unless @current_user
+
+    @question_update = Update.where(model: :question).first
+    @questions = if @question_update.last?(params[:last_update])
+                   []
+                 else
+                   Question.includes(:answers).approved
+                           .where.not(id: @current_user.try(:passed_questions))
+                 end
   end
 
   # POST /questions
