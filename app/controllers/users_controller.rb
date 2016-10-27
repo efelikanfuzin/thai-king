@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.find_or_initialize_by(user_params)
+    @user = User.find_or_initialize_by(user_params.permit(:email))
     @user.create_session
 
     if @user.save
@@ -26,8 +26,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :device_id, :balance,
-                                 passed_questions: [])
+    params.require(:user).permit(:email, :balance, passed_questions: [])
   end
 
   def set_user
