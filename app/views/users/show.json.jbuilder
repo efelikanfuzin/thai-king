@@ -1,1 +1,1 @@
-json.user @user, :id, :email, :balance, :passed_questions, :token
+json.user @user, :id, :email, :balance, :passed_questions, :token, :device_id
