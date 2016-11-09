@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  initial_balance: 1
+  balance_after_reset: 1
+
+two:
+  initial_balance: 1
+  balance_after_reset: 1

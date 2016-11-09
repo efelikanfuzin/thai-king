@@ -6,6 +6,10 @@ class QuestionsController < ApplicationController
     render head(:unauthorized) && return unless @current_user
 
     @question_update = Update.where(model: :question).first
+    if params[:all]
+      @questions = Question.includes(:answers).approved
+      return
+    end
     @questions = if @question_update.last?(params[:last_update])
                    []
                  else
